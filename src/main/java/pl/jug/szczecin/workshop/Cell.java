@@ -48,10 +48,32 @@ public class Cell {
 		if (neighbours == null) {
 			throw new IllegalStateException();
 		}
+
+		int counter = 0;
+
+		for(final Cell neighbour : neighbours) {
+			if (neighbour.isAlive()) {
+				counter += 1;
+			}
+		}
+
+		if (isAlive()) {
+			if ((counter == 2) || (counter == 3)) {
+				this.newState = CellState.ALIVE;
+			} else {
+				this.newState = CellState.DEAD;
+			}
+		} else {
+			if (counter == 3) {
+				this.newState = CellState.ALIVE;
+			} else {
+				this.newState = CellState.DEAD;
+			}
+		}
 	}
 
 	public void actualizeState() {
-
+		this.state = this.newState;
 	}
 
 	public boolean isAlive() {
